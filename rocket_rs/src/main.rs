@@ -19,8 +19,19 @@ fn index() -> Redirect {
 }
 
 #[get("/google-key-desktop/<_platform>/<current_version>?<msg>")] // &<other_stuff>
-fn google_keep_desktop_api(_platform: &str, current_version: &str, msg: Option<&str>) -> Status {
-    Status::NoContent
+fn google_keep_desktop_api(
+    _platform: &str,
+    current_version: &str,
+    msg: Option<&str>,
+) -> Result<Value, Status> {
+    /* Status::NoContent */
+    if let Some(msg) = msg {
+        println!("{msg}");
+        return Err(Status::NoContent);
+    }
+    Ok(json!({
+        "notes": "it works"
+    }))
 }
 
 #[launch]
